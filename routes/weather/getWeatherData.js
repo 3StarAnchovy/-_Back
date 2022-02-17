@@ -1,11 +1,13 @@
 const { json } = require('body-parser');
 const request = require('request');
+require('dotenv').config();
+
+const { WEATHER_KEY, WEATHER_URL } = process.env;
 
 
-const getWeatherData = (req,callback) => {
-	const url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst';
-	let queryParams = '?' + encodeURIComponent('serviceKey') + '=' +
-		'hdzJlamqcI9RadMq1bNFB06T1dXVd5zzs6/dN50zUW2fpJMTfxlgs8yI54BIstOyE3VXPC9Hw1uCb7yD7VblVA=='; /*Service Key*/
+const getWeatherData = (req, callback) => {
+	const url = WEATHER_URL;
+	let queryParams = '?' + encodeURIComponent('serviceKey') + '=' + WEATHER_KEY; /*Service Key*/
 	queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
 	queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('1000'); /**/
 	queryParams += '&' + encodeURIComponent('dataType') + '=' + encodeURIComponent('JSON'); /**/
@@ -16,18 +18,17 @@ const getWeatherData = (req,callback) => {
 	console.log(url + queryParams);
 	request(
 		{
-			url : url + queryParams,
-			method : 'GET',
-			headers : {
+			url: url + queryParams,
+			method: 'GET',
+			headers: {
 				'Accept': 'application/json'
 			}
-		}, function(err,response,body)
-		{
-			console.log(body);
-			callback({
-					data : body
-			})
-		}
+		}, function (err, response, body) {
+		console.log(body);
+		callback({
+			data: body
+		})
+	}
 	)
 }
 
