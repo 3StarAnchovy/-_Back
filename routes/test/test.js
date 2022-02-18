@@ -27,7 +27,6 @@ app.get("/insert", (req, res) => {
 			res.send("okok");
 	})
 })
-//var sql = `INSERT INTO user VALUES ('${params[0]}','${params[1]}','${params[2]}','${params[3]}','${params[4]}')`;
 
 app.listen(app.get("port"));
 console.log("Listening on", app.get("port"));
