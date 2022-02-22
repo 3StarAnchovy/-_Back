@@ -9,7 +9,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dbtest":"nodemon routes/test/test.js"
+    "dbtest":"nodemon routes/test/test.js",
+    "back" : "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
