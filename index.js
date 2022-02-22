@@ -7,7 +7,7 @@ const cors = require('cors');
 const homeRouter = require('./routes/home');
 const cctvRouter = require('./routes/cctv');
 const weatherRouter = require('./routes/weather/weather')
-const userRouter = require('./routes/user/user');
+const userRouter = require('./routes/User/User')
 //const testRouter = require('./routes/test/test')
 
 app.use(bodyParser.json());
