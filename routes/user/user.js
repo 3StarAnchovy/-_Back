@@ -3,6 +3,7 @@ const express = require('express');
 const mysql = require("mysql");
 const db = require("../../db/index");
 const router = express.Router();
+const user = require('./loginAction');
 
 router.post('/SignUp', (req, res) => {
     var body = req.body;
@@ -13,6 +14,14 @@ router.post('/SignUp', (req, res) => {
         if(err) console.log(err);
         console.log(results);
     });
+});
+
+router.post('/Login', (req, res) => {
+    var body = req.body;
+    console.log(body);
+    loginSuccess = () => res.send(200);
+    loginFalse = () => res.status(401).send({ 'result': 'false' });
+    user.checkUser(body, loginSuccess, loginFalse);
 });
 
 module.exports = router;
