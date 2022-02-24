@@ -19,7 +19,7 @@ router.post('/SignUp', (req, res) => {
 router.post('/Login', (req, res) => {
     var body = req.body;
     console.log(body);
-    loginSuccess = () => res.send(200);
+    loginSuccess = () => res.json({'hello' : 'asdf'});
     loginFalse = () => res.status(401).send({ 'result': 'false' });
     user.checkUser(body, loginSuccess, loginFalse);
 });
