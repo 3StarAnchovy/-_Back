@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
 const bodyParser = require('body-parser');
 const port = process.env.PORT || 3001;
 const cors = require('cors');
@@ -13,15 +15,22 @@ const userRouter = require('./routes/User/user')
 app.use(bodyParser.json());
 app.use(cors());
 
-//레거시
-// app.use('/', (req, res) => {
-// 	res.json({ test: "im home" });
-// })
+require('dotenv').config();  //env(환경변수)파일 불러오기
 
-// app.get('/', (req, res) => {
-// 	res.send('hihi');
-// })
+app.use(session({
+	secret : process.env.SESSION_SECRET,
+	resave : false,
+	saveUninitialized : true,
+	store : new MySQLStore({
+		host : '127.0.0.1',
+		port : 3306,
+		user : process.env.DB_USER,
+		password : process.env.DB_PASSWORD,
+		database : 'test'
+	})
+}));
 
+app.use(bodyParser.urlencoded({ extended: false}));
 app.use('/',homeRouter);
 app.use('/Cctv',cctvRouter);
 app.use('/Weather',weatherRouter);
