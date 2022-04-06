@@ -31,7 +31,7 @@ router.post('/Login', (req, res) => {
     var body = req.body;
     console.log(body);
     loginSuccess = () => res.json({ 'result': 'true' });
-    loginFalse = () => res.status(401).send({ 'result': 'false' });
+    loginFalse = () => res.json({ 'result': 'false' });
     user.checkUser(body, loginSuccess, loginFalse);
 });
 

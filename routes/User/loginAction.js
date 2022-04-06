@@ -10,12 +10,15 @@ checkUser = (userData, loginSuccess, loginFalse) => {
         if (err) console.log(err);
         console.log(results);
 
-        const hashedData = encoding.encryptForLogin(params[1], results[0].salt)
-            .then((hashedPW) => {
-                if (results[0].id.length > 0 && hashedPW === results[0].pw)
-                    loginSuccess();
-                else loginFalse();
-            });
+        if (results.length > 0) {
+            const hashedData = encoding.encryptForLogin(params[1], results[0].salt)
+                .then((hashedPW) => {
+                    if (results[0].id.length > 0 && hashedPW === results[0].pw)
+                        loginSuccess();
+                    else loginFalse();
+                })
+        }
+        else loginFalse();
     });
 };
 
