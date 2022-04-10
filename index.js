@@ -21,6 +21,9 @@ app.use(session({
 	secret : process.env.SESSION_SECRET,
 	resave : false,
 	saveUninitialized : true,
+	cookie : {
+		maxAge : 60
+	},
 	store : new MySQLStore({
 		host : '127.0.0.1',
 		port : 3306,

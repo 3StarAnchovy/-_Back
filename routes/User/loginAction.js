@@ -2,7 +2,7 @@ const mysql = require("mysql");
 const db = require("../../db/index");
 const encoding = require('./encodingModule');
 
-checkUser = (userData, loginSuccess, loginFalse) => {
+checkUser = (userData, loginCondition) => {
     var params = [userData.id, userData.pw];
     console.log("checkUser");
     const sql = `SELECT id, pw, salt FROM user WHERE id = ?`;
@@ -10,15 +10,16 @@ checkUser = (userData, loginSuccess, loginFalse) => {
         if (err) console.log(err);
         console.log(results);
 
-        if (results.length > 0) {
+        if (results.length > 0) { //mySQL emptySet 오류 fix조건
             const hashedData = encoding.encryptForLogin(params[1], results[0].salt)
                 .then((hashedPW) => {
                     if (results[0].id.length > 0 && hashedPW === results[0].pw)
-                        loginSuccess();
-                    else loginFalse();
+                        loginCondition('true');
+                    else if(hashedPW != results[0].pw)
+                    loginCondition('checkPw');
                 })
         }
-        else loginFalse();
+        else loginCondition('checkId');
     });
 };
 
