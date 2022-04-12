@@ -5,7 +5,7 @@ const db = require("../../db/index");
 const router = express.Router();
 const user = require('./loginAction');
 const encoding = require('./encodingModule');
-const session = require('express-session');
+//const session = require('express-session');
 
 router.post('/SignUp', (req, res) => {
     var body = req.body;
@@ -33,26 +33,17 @@ router.post('/Login', (req, res) => {
     console.log(body);
     loginCondition = (loginData) => {
         req.session.displayName = body.id;
-        //console.log(req.session);
-        // const sql = 'SELECT session_id FROM sessions WHERE data = ?';
-        // let params = ['{"cookie":{"originalMaxAge":null,"expires":null,"httpOnly":true,"path":"/"},"displayName":"test12345"}'];
-        // db.connection.query(sql, params, (err, results) => {
-        //     if (err) console.log(err);
-        //     else {
-        //         console.log('session test');
-        //         console.log(results[0].session_id);
-        //     }
-        // });
-        console.log(req.sessionID);
-        res.json({ 'result': loginData, 'displayName': body.id, 'sessionInfo': req.session.displayName });
+        req.session.isLogin = true;
+        console.log(req.session.id);
+        res.json({ 'result': loginData, 'displayName': body.id, 'sessionID': req.sessionID });
     };
     user.checkUser(body, loginCondition);
 });
 
 router.post('/Logout', (req, res) => {
-    req.session.destroy(() => {
-        req.session;
-    });
+    //console.log(req.session.id);
+    //console.log(req.headers.authorization);
+    user.delSession(req.headers.authorization)
     res.json({ 'result': 'true' });
 });
 

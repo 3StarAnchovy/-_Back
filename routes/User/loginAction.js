@@ -15,14 +15,22 @@ checkUser = (userData, loginCondition) => {
                 .then((hashedPW) => {
                     if (results[0].id.length > 0 && hashedPW === results[0].pw)
                         loginCondition('true');
-                    else if(hashedPW != results[0].pw)
-                    loginCondition('checkPw');
+                    else if (hashedPW != results[0].pw)
+                        loginCondition('checkPw');
                 })
         }
         else loginCondition('checkId');
     });
 };
 
+delSession = (sessionID) => {
+    const sql = 'DELETE from sessions WHERE session_id = ?'
+    db.connection.query(sql, sessionID, (err, results) => {
+        if (err) console.log(err);
+        console.log(results);
+    })
+}
 module.exports = {
-    checkUser
+    checkUser,
+    delSession
 };

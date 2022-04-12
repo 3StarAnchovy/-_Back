@@ -13,31 +13,38 @@ const userRouter = require('./routes/User/user')
 //const testRouter = require('./routes/test/test')
 
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({
+	origin: true,
+	methods: ['GET', 'POST', 'OPTIONS'],
+	credentials: true,
+}));
 
 require('dotenv').config();  //env(환경변수)파일 불러오기
 
 app.use(session({
-	secret : process.env.SESSION_SECRET,
-	resave : false,
-	saveUninitialized : true,
-	cookie : {
-		maxAge : 60
+	secret: process.env.SESSION_SECRET,
+	resave: false,
+	saveUninitialized: false,
+	cookie: {
+		httpOnly : true,
+        sameSite : 'none',
+        maxAge : 5300000,
+        secure : true,
 	},
-	store : new MySQLStore({
-		host : '127.0.0.1',
-		port : 3306,
-		user : process.env.DB_USER,
-		password : process.env.DB_PASSWORD,
-		database : 'test'
+	store: new MySQLStore({
+		host: '127.0.0.1',
+		port: 3306,
+		user: process.env.DB_USER,
+		password: process.env.DB_PASSWORD,
+		database: 'test'
 	})
 }));
 
-app.use(bodyParser.urlencoded({ extended: false}));
-app.use('/',homeRouter);
-app.use('/Cctv',cctvRouter);
-app.use('/Weather',weatherRouter);
-app.use('/User',userRouter);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/', homeRouter);
+app.use('/Cctv', cctvRouter);
+app.use('/Weather', weatherRouter);
+app.use('/User', userRouter);
 //app.use('/Test',testRouter);
 app.listen(port, () => {
 	console.log(`듣고있어용 ${port}`);
