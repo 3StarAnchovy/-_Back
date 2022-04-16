@@ -41,8 +41,6 @@ router.post('/Login', (req, res) => {
 });
 
 router.post('/Logout', (req, res) => {
-    //console.log(req.session.id);
-    //console.log(req.headers.authorization);
     user.delSession(req.headers.authorization)
     res.json({ 'result': 'true' });
 });
