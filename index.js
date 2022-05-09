@@ -8,8 +8,9 @@ const cors = require('cors');
 
 const homeRouter = require('./routes/home');
 const cctvRouter = require('./routes/cctv');
-const weatherRouter = require('./routes/weather/weather')
-const userRouter = require('./routes/User/user')
+const weatherRouter = require('./routes/weather/weather');
+const userRouter = require('./routes/User/user');
+const senRouter = require('./routes/Sensor/sensor');
 //const testRouter = require('./routes/test/test')
 
 app.use(bodyParser.json());
@@ -45,6 +46,7 @@ app.use('/', homeRouter);
 app.use('/Cctv', cctvRouter);
 app.use('/Weather', weatherRouter);
 app.use('/User', userRouter);
+app.use('/Sensor', senRouter);
 //app.use('/Test',testRouter);
 app.listen(port, () => {
 	console.log(`듣고있어용 ${port}`);
