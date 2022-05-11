@@ -22,4 +22,16 @@ router.post('/', (req, res) => {
     })
 });
 
+router.post('/Chart', (req, res) => { //센서 데이터 불러오는 라우터
+    const params = req.body.id;
+    const sql = 'SELECT ec_value, tem, hum, water_level, time FROM sensor_value WHERE id = ?';
+    db.connection.query(sql, params, (err, results)=>{
+        if(err) console.log(err);
+        else
+            res.json({ 'results': results });
+            console.log('SENSOR CHART Router');
+            console.log(results);
+    });
+});
+
 module.exports = router;
