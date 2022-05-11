@@ -10,7 +10,14 @@ const encoding = require('./encodingModule');
 router.post('/SignUp', (req, res) => {
     var body = req.body;
     console.log(body);
-    const hasedData = encoding.encryptPassword(body.pw)
+    //비밀번호 예외처리
+    if(!body.pw || typeof body.pw != 'string'){
+        console.log('비밀번호');
+        res.json({'result' : 'false'});
+    }
+    else
+    {
+        const hasedData = encoding.encryptPassword(body.pw)
         .then((hasedData) => {
             console.log(hasedData.hased);
             var params = [body.id, body.name, hasedData.hashed, body.email, 0, hasedData.salt];
@@ -26,6 +33,7 @@ router.post('/SignUp', (req, res) => {
             });
         })
     console.log(hasedData);
+    }
 });
 
 router.post('/Login', (req, res) => {
