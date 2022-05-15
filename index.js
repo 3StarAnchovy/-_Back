@@ -3,7 +3,7 @@ const app = express();
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const bodyParser = require('body-parser');
-const port = process.env.PORT || 3001;
+const port = process.env.SERVER_PORT || 3001;
 const cors = require('cors');
 
 const homeRouter = require('./routes/home');
