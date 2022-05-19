@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
+
+require('dotenv').config();  //env(환경변수)파일 불러오기
+
 const bodyParser = require('body-parser');
 const port = process.env.SERVER_PORT || 3001;
 const cors = require('cors');
@@ -20,7 +23,7 @@ app.use(cors({
 	credentials: true,
 }));
 
-require('dotenv').config();  //env(환경변수)파일 불러오기
+
 
 app.use(session({
 	secret: process.env.SESSION_SECRET,

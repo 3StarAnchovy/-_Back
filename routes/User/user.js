@@ -11,6 +11,8 @@ router.post('/SignUp', (req, res) => {
     var body = req.body;
     console.log(body);
     //비밀번호 예외처리
+    //pw가 null이나 undefined 일때
+    //pw가 string이 아닌 다른 자료형일때
     if(!body.pw || typeof body.pw != 'string'){
         console.log('비밀번호');
         res.json({'result' : 'false'});
