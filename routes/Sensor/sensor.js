@@ -25,10 +25,14 @@ router.post('/', (req, res) => {
 router.post('/Chart', (req, res) => { //센서 데이터 불러오는 라우터
     const params = [req.body.id, req.body.time];
     console.log(req.body.time);
-    let sql = 'SELECT ec_value, tem, hum, water_level, time FROM sensor_value WHERE id = ? AND DATE(time) = ?';
+    //오늘 하루
+    let sql = `SELECT ec_value, tem, hum, water_level, date_format(time, '%h:%i') as time FROM sensor_value WHERE id = ? AND time BETWEEN DATE_ADD(NOW(), INTERVAL -1 DAY ) AND NOW()`;
+
+    //전체
     if(req.body.time === 'all')
-        sql = 'SELECT ec_value, tem, hum, water_level, time FROM sensor_value WHERE id = ?';
-    db.connection.query(sql, params, (err, results)=>{
+        sql = `SELECT ec_value, tem, hum, water_level, date_format(time, '%m/%d/%h:%i') as time FROM sensor_value WHERE id = ?`;
+
+        db.connection.query(sql, params, (err, results)=>{
         if(err) console.log(err);
         else
             res.json({ 'results': results });
