@@ -31,6 +31,8 @@ router.post('/Chart', (req, res) => { //센서 데이터 불러오는 라우터
     //전체
     if(req.body.time === 'all')
         sql = `SELECT ec_value, tem, hum, water_level, date_format(time, '%m/%d/%h:%i') as time FROM sensor_value WHERE id = ?`;
+    if(req.body.time === 'week')
+        sql = `select avg(ec_value) as ec_value, avg(tem) as tem, avg(hum) as hum, avg(water_level) as water_level, date_format(time, '%m-%d') as time from sensor_value where id = ? AND time BETWEEN DATE_ADD(NOW(), INTERVAL -7 DAY ) AND NOW() group by date_format(time, '%m-%d');`;
 
         db.connection.query(sql, params, (err, results)=>{
         if(err) console.log(err);

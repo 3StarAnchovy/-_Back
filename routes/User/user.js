@@ -55,4 +55,22 @@ router.post('/Logout', (req, res) => {
     res.json({ 'result': 'true' });
 });
 
+router.post('/Register', (req, res) =>
+{
+    let userId = req.body.userId;
+    let farmId = req.body.farmId;
+    let params = [userId, farmId];
+    const sql = 'INSERT INTO farm_list VALUES (?,?)';
+    db.connection.query(sql, params, (err, results) =>
+    {
+        if (err) {
+            console.log(err);
+            res.json({'result' : 'false'});
+        }
+        else
+            res.json({'result' : 'true'});
+        console.log(results);
+    })
+})
+
 module.exports = router;
